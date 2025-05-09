@@ -33,7 +33,7 @@ def parse_args():
     )
     parser.add_argument(
         "-m",
-        "--model",
+        "--model-name",
         help="Huggingface model name.",
         required=True,
         type=huggingface_model_name,

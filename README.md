@@ -12,13 +12,13 @@ pip install encoder-converter
 ```
 ## Usage
 ### Run
-Compiled model name wille be t5_encoder.onnx
+You can find the complied model at `output_dir`/t5_encoder.onnx
 ```bash
 convertencoder --model project/repo --output-dir /my/output/dir --cache_dir /cache/dir
 ```
 ### Parameters
-| Parameter           | Description                                               | Default   |
-|---------------------|-----------------------------------------------------------|-----------|
-| `--model`           | Huggingface model name                                    |           |
-| `--output-dir`      | Path to save compiled model and tokenizer artifacts.      |           |
-| `--cache-dir`       | Path to a directory in which a downloaded pretrained model configuration should be cached while compiling.                                                 |  `/tmp`   |
+| Parameter      | Description                                               | Default   |
+|----------------|-----------------------------------------------------------|-----------|
+| `--model-name` | Huggingface model name                                    |           |
+| `--output-dir` | Path to save compiled model and tokenizer artifacts.      |           |
+| `--cache-dir`  | Path to a directory in which a downloaded pretrained model configuration should be cached while compiling.                                                 |  `/tmp`   |
