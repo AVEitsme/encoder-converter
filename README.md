@@ -14,7 +14,7 @@ pip install encoder-converter
 ## Usage
 ### Run
 ```bash
-convertencoder --model-name project/huggingface_repo --format onnx --output-dir /my/output/dir --cache-dir /cache/dir --model-output-name t5_encoder
+convertencoder --model-name project/huggingface_repo --format onnx --output-dir /my/output/dir --cache-dir /cache/dir --output-model-name t5_encoder
 ```
 ### Parameters
 | Parameter             | Description                                               | Default   |
@@ -23,10 +23,10 @@ convertencoder --model-name project/huggingface_repo --format onnx --output-dir 
 | `--format`            | Compiled model format. Available: `onnx`, `openvino`      |           |
 | `--output-dir`        | Path to save compiled model and tokenizer artifacts.      |           |
 | `--cache-dir`         | Path to a directory in which a downloaded pretrained model configuration should be cached while compiling.                                                             |  `/tmp`   |
-| `--model-output-name` | If not specified, the default output model name will be parsed depends on the `model_name` parameter.                                                             |           |
-If `--model-output-name` is not specified, you can find the complied model at `output_dir`/`huggingface_repo`.`extension`:
+| `--output-model-name` | If not specified, the default output model name will be parsed depends on the `--model_name` parameter.                                                             |           |
+If `--output-model-name` is not specified, you can find the complied model at `output_dir`/`huggingface_repo`.`extension`:
 1. output_dir - `--ouput-dir` parameter.
 2. huggingface_repo - extracts from the `--model-name` parameter.
 3. extension - depends on selected `format` parameter:
     * `onnx` - `onnx`
-    * `openvino` - `x
+    * `openvino` - `xml`

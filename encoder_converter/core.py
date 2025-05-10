@@ -76,7 +76,7 @@ def convert_encoder(
     target_format: str,
     output_dir: str,
     cache_dir: str,
-    model_output_name: Optional[str] = None,
+    output_model_name: Optional[str] = None,
 ):
     """Convert huggingface encoder model to onnx.
 
@@ -85,7 +85,7 @@ def convert_encoder(
         target_format (str): Compiled model format. Available: `openvino`, `onnx`.
         output_dir (str): Path to save compiled model.
         cache_dir (str): Path to a directory in which a downloaded pretrained model configuration should be cached while compiling.
-        model_output_name (str): If not specified, the default output model name will be parsed depends on the `model_name` parameter.
+        output_model_name (str): If not specified, the default output model name will be parsed depends on the `model_name` parameter.
     """
     if target_format not in ["onnx", "openvino"]:
         raise ModelFormatNotSupportedError(format=target_format)
@@ -95,7 +95,7 @@ def convert_encoder(
             tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=tmp_dir)
             model = T5EncoderModelWrapper.from_pretrained(model_name, cache_dir=tmp_dir)
             model.eval()
-        if model_output_name is None:
+        if output_model_name is None:
             output_model_name = model_name.split("/")[1]
         dummy_input = tokenizer(["Dummy Input"], return_tensors="pt")["input_ids"]
         if target_format == "onnx":
