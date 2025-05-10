@@ -58,4 +58,10 @@ def parse_args():
         default="/tmp",
         required=True,
     )
+    parser.add_argument(
+        "-n",
+        "--output-model-name",
+        help="If not specified, the default output model name will be parsed depends on the `model_name` parameter.",
+        required=False,
+    )
     return parser.parse_args()

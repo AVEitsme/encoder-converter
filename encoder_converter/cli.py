@@ -9,6 +9,7 @@ def main():
         target_format=args.format,
         output_dir=args.output_dir,
         cache_dir=args.cache_dir,
+        model_output_name=args.model_output_name,
     )
 
 

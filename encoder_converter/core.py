@@ -1,6 +1,6 @@
 import tempfile
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 import openvino as ov
 import torch
@@ -72,7 +72,11 @@ def convert_to_openvino(input_model_path: str, output_dir: Path, model_name: str
 
 
 def convert_encoder(
-    model_name: str, target_format: str, output_dir: str, cache_dir: str
+    model_name: str,
+    target_format: str,
+    output_dir: str,
+    cache_dir: str,
+    model_output_name: Optional[str] = None,
 ):
     """Convert huggingface encoder model to onnx.
 
@@ -81,6 +85,7 @@ def convert_encoder(
         target_format (str): Compiled model format. Available: `openvino`, `onnx`.
         output_dir (str): Path to save compiled model.
         cache_dir (str): Path to a directory in which a downloaded pretrained model configuration should be cached while compiling.
+        model_output_name (str): If not specified, the default output model name will be parsed depends on the `model_name` parameter.
     """
     if target_format not in ["onnx", "openvino"]:
         raise ModelFormatNotSupportedError(format=target_format)
@@ -90,8 +95,8 @@ def convert_encoder(
             tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=tmp_dir)
             model = T5EncoderModelWrapper.from_pretrained(model_name, cache_dir=tmp_dir)
             model.eval()
-
-        output_model_name = model_name.split("/")[1]
+        if model_output_name is None:
+            output_model_name = model_name.split("/")[1]
         dummy_input = tokenizer(["Dummy Input"], return_tensors="pt")["input_ids"]
         if target_format == "onnx":
             _ = convert_to_onnx(
