@@ -29,4 +29,4 @@ If `--model-output-name` is not specified, you can find the complied model at `o
 2. huggingface_repo - extracts from the `--model-name` parameter.
 3. extension - depends on selected `format` parameter:
     * `onnx` - `onnx`
-    * `openvino` - `xml`
+    * `openvino` - `x
