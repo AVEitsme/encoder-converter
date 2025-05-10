@@ -17,42 +17,38 @@ def test_faulure_huggingface_model_name():
         _ = huggingface_model_name("test")
 
 
-def test_successful_parse_args():
-    EXPECTED_PROG_NAME = "encoder-converter"
-    EXPECTED_MODEL = "test-project/test-repo"
-    EXPECTED_OUTPUT_DIR = "test-output"
-    EXPECTED_CACHE_DIR = "test-cache"
+@pytest.mark.parametrize(
+    "model_name,format,output_dir,cache_dir",
+    [
+        ("test-project/test-repo", "onnx", "test-output", "test-cache"),
+        ("test-project/test-repo", "openvino", "test-output", "test-cache"),
+    ],
+)
+def test_successful_parse_args(model_name, format, output_dir, cache_dir):
+    PROG_NAME = "encoder-converter"
     with patch(
         "sys.argv",
-        [
-            EXPECTED_PROG_NAME,
-            "-m",
-            EXPECTED_MODEL,
-            "-o",
-            EXPECTED_OUTPUT_DIR,
-            "-c",
-            EXPECTED_CACHE_DIR,
-        ],
+        [PROG_NAME, "-m", model_name, "-f", format, "-o", output_dir, "-c", cache_dir],
     ):
         args = parse_args()
-        assert args.model == EXPECTED_MODEL
-        assert args.output_dir == EXPECTED_OUTPUT_DIR
-        assert args.cache_dir == EXPECTED_CACHE_DIR
+        assert args.model_name == model_name
+        assert args.format == format
+        assert args.output_dir == output_dir
+        assert args.cache_dir == cache_dir
 
 
-def test_failure_parse_args():
-    EXPECTED_PROG_NAME = "encoder-converter"
-    EXPECTED_MODEL = "test-model"
-    EXPECTED_CACHE_DIR = "test-cache"
+@pytest.mark.parametrize(
+    "model_name,format,output_dir,cache_dir",
+    [
+        ("test-project", "onnx", "test-output", "test-cache"),
+        ("test-project/test-repo", "test", "test-output", "test-cache"),
+    ],
+)
+def test_failure_parse_args(model_name, format, output_dir, cache_dir):
+    PROG_NAME = "encoder-converter"
     with patch(
         "sys.argv",
-        [
-            EXPECTED_PROG_NAME,
-            "-m",
-            EXPECTED_MODEL,
-            "-c",
-            EXPECTED_CACHE_DIR,
-        ],
+        [PROG_NAME, "-m", model_name, "-f", format, "-o", output_dir, "-c", cache_dir],
     ):
         with pytest.raises(SystemExit):
             _ = parse_args()

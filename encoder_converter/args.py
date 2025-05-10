@@ -39,6 +39,13 @@ def parse_args():
         type=huggingface_model_name,
     )
     parser.add_argument(
+        "-f",
+        "--format",
+        help="Compiled model format.",
+        required=True,
+        choices=["onnx", "openvino"],
+    )
+    parser.add_argument(
         "-o",
         "--output-dir",
         help="Path to save compiled model and tokenizer artifacts.",
