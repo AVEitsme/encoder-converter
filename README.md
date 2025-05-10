@@ -20,7 +20,7 @@ You can find the complied model at `output_dir`/`huggingface_repo`.`extension`:
     * `onnx` - `onnx`
     * `openvino` - `xml`
 ```bash
-convertencoder --model-name project/huggingface_repo --format onnx --output-dir /my/output/dir --cache_dir /cache/dir
+convertencoder --model-name project/huggingface_repo --format onnx --output-dir /my/output/dir --cache-dir /cache/dir
 ```
 ### Parameters
 | Parameter      | Description                                               | Default   |
